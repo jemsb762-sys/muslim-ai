@@ -1,7 +1,0 @@
-{
-  "name": "Muslim AI",
-  "description": "Islamic AI educational assistant in Amharic, Afaan Oromoo, and Arabic.",
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
