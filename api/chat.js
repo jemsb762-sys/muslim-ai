@@ -1,3 +1,4 @@
+import { GoogleGenAI } from "@google/genai";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -5,10 +6,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
+  const geminiApiKey = process.env.GEMINI_API_KEY;
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+
+  if (!geminiApiKey && !openaiApiKey) {
     return res.status(500).json({
-      error: "Server API key is not configured."
+      error: "Server API key is not configured. Please set GEMINI_API_KEY or OPENAI_API_KEY in your environment variables."
     });
   }
 
@@ -57,13 +60,43 @@ Important rules:
 `;
 
   try {
+    if (geminiApiKey) {
+      const ai = new GoogleGenAI({
+        apiKey: geminiApiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          },
+        },
+      });
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3.8-flash",
+        contents: message.trim(),
+        config: {
+          systemInstruction: instructions,
+        },
+      });
+
+      const reply = response.text?.trim();
+
+      if (!reply) {
+        return res.status(502).json({
+          error: "The AI returned no text. Please retry."
+        });
+      }
+
+      return res.status(200).json({ reply });
+    }
+
+    // Fallback to OpenAI if OPENAI_API_KEY is provided and GEMINI_API_KEY is not
     const response = await fetch(
       "https://api.openai.com/v1/responses",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`
+          "Authorization": `Bearer ${openaiApiKey}`
         },
         body: JSON.stringify({
           model: "gpt-5-mini",
@@ -81,7 +114,7 @@ Important rules:
       console.error("OpenAI API error:", response.status);
       return res.status(502).json({
         error: response.status === 401
-          ? "Invalid API key. Check Vercel settings."
+          ? "Invalid API key. Check settings."
           : response.status === 429
           ? "API limit or quota reached. Check billing."
           : "AI service error. Please try again."
