@@ -1,0 +1,390 @@
+const response = await fetch(
+  "https://YOUR-PROJECT.vercel.app/api/chat",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: text,
+      language: currentLang
+    })
+  }
+);
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Muslim AI | إسلامي AI</title>
+<meta name="description" content="Islamic AI educational assistant in Amharic, Afaan Oromoo, and Arabic.">
+<meta property="og:title" content="Muslim AI | إسلامي AI">
+<meta property="og:description" content="Islamic AI educational assistant in Amharic, Afaan Oromoo, and Arabic.">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,#063b2b,#126b4b);
+    color:white;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+header{
+    text-align:center;
+    padding:20px 15px;
+    background:rgba(0,0,0,.2);
+}
+
+.bismillah{
+    font-size:24px;
+    color:#f1d58a;
+    margin-bottom:10px;
+}
+
+h1{
+    font-size:30px;
+}
+
+.subtitle{
+    margin-top:7px;
+    opacity:.85;
+}
+
+.languages{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:18px;
+    flex-wrap:wrap;
+}
+
+.lang-btn{
+    border:0;
+    padding:9px 16px;
+    border-radius:25px;
+    background:rgba(255,255,255,.15);
+    color:white;
+    cursor:pointer;
+}
+
+.lang-btn.active{
+    background:#2e8b63;
+}
+
+.chat-container{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+    padding:15px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.messages{
+    flex:1;
+    min-height:350px;
+    overflow-y:auto;
+    padding:15px;
+    border-radius:15px;
+    background:rgba(255,255,255,.06);
+}
+
+.message{
+    max-width:85%;
+    padding:12px 15px;
+    margin-bottom:12px;
+    border-radius:15px;
+    line-height:1.6;
+    white-space:pre-wrap;
+}
+
+.bot{
+    background:rgba(46,139,99,.55);
+}
+
+.user{
+    background:rgba(255,255,255,.16);
+    margin-left:auto;
+}
+
+.input-area{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+#userInput{
+    flex:1;
+    border:0;
+    outline:0;
+    border-radius:30px;
+    padding:14px 18px;
+    font-size:16px;
+}
+
+#sendBtn{
+    border:0;
+    border-radius:30px;
+    padding:0 22px;
+    background:#2e8b63;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#sendBtn:disabled{
+    opacity:.5;
+}
+
+footer{
+    text-align:center;
+    padding:15px;
+    opacity:.65;
+    font-size:13px;
+}
+
+.typing{
+    opacity:.7;
+    font-style:italic;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="bismillah">
+بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+</div>
+
+<h1>Muslim AI</h1>
+
+<p class="subtitle" id="subtitle">
+እስላማዊ AI በአማርኛ፣ አፋን ኦሮሞ እና ዐረብኛ
+</p>
+
+<div class="languages">
+
+<button class="lang-btn active" onclick="changeLang('am',this)">
+አማርኛ
+</button>
+
+<button class="lang-btn" onclick="changeLang('om',this)">
+Afaan Oromoo
+</button>
+
+<button class="lang-btn" onclick="changeLang('ar',this)">
+العربية
+</button>
+
+</div>
+
+</header>
+
+<div class="chat-container">
+
+<div class="messages" id="messages">
+
+<div class="message bot" id="welcome">
+አስላሙ አለይኩም! እኔ Muslim AI ነኝ።
+የእስልምና ጥያቄዎን ይጠይቁኝ።
+</div>
+
+</div>
+
+<div class="input-area">
+
+<input
+id="userInput"
+type="text"
+placeholder="ጥያቄዎን ይጻፉ..."
+autocomplete="off"
+/>
+
+<button id="sendBtn">
+ላክ
+</button>
+
+</div>
+
+</div>
+
+<footer>
+Muslim AI — Made for the Ummah ❤️
+</footer>
+
+<script>
+
+const translations={
+
+am:{
+subtitle:"እስላማዊ AI በአማርኛ፣ አፋን ኦሮሞ እና ዐረብኛ",
+welcome:"አስላሙ አለይኩም! እኔ Muslim AI ነኝ። የእስልምና ጥያቄዎን ይጠይቁኝ።",
+placeholder:"ጥያቄዎን ይጻፉ...",
+send:"ላክ",
+typing:"እያዘጋጀ ነው..."
+},
+
+om:{
+subtitle:"AI Islaamaa Afaan Oromoo, Amaariffaa fi Arabiffaan",
+welcome:"Assalaamu Alaikum! Ani Muslim AI dha. Gaaffii Islaamaa kee na gaafadhu.",
+placeholder:"Gaaffii kee barreessi...",
+send:"Ergi",
+typing:"Deebii qopheessaa jira..."
+},
+
+ar:{
+subtitle:"ذكاء اصطناعي إسلامي بالعربية والأمهرية والأورومو",
+welcome:"السلام عليكم! أنا Muslim AI. اسألني عن الإسلام.",
+placeholder:"اكتب سؤالك...",
+send:"إرسال",
+typing:"جاري إعداد الإجابة..."
+}
+
+};
+
+let currentLang="am";
+
+function changeLang(lang,button){
+
+currentLang=lang;
+
+document
+.querySelectorAll(".lang-btn")
+.forEach(btn=>btn.classList.remove("active"));
+
+button.classList.add("active");
+
+document.getElementById("subtitle").textContent=
+translations[lang].subtitle;
+
+document.getElementById("welcome").textContent=
+translations[lang].welcome;
+
+document.getElementById("userInput").placeholder=
+translations[lang].placeholder;
+
+document.getElementById("sendBtn").textContent=
+translations[lang].send;
+
+}
+
+async function sendMessage(){
+
+const input=document.getElementById("userInput");
+const send=document.getElementById("sendBtn");
+const messages=document.getElementById("messages");
+
+const text=input.value.trim();
+
+if(!text)return;
+
+const userMsg=document.createElement("div");
+
+userMsg.className="message user";
+userMsg.textContent=text;
+
+messages.appendChild(userMsg);
+
+input.value="";
+send.disabled=true;
+
+messages.scrollTop=messages.scrollHeight;
+
+const typing=document.createElement("div");
+
+typing.className="message bot typing";
+typing.textContent=translations[currentLang].typing;
+
+messages.appendChild(typing);
+
+messages.scrollTop=messages.scrollHeight;
+
+try{
+
+const response=await fetch("/api/chat",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+message:text,
+language:currentLang
+})
+
+});
+
+const data=await response.json();
+
+typing.remove();
+
+const botMsg=document.createElement("div");
+
+botMsg.className="message bot";
+
+if(!response.ok){
+
+botMsg.textContent=
+"Error: "+(data.error||"Something went wrong.");
+
+}else{
+
+botMsg.textContent=
+data.reply||"No response received.";
+
+}
+
+messages.appendChild(botMsg);
+
+}catch(error){
+
+typing.remove();
+
+const botMsg=document.createElement("div");
+
+botMsg.className="message bot";
+
+botMsg.textContent=
+"Network error. Please try again.";
+
+messages.appendChild(botMsg);
+
+}
+
+send.disabled=false;
+
+messages.scrollTop=messages.scrollHeight;
+
+}
+
+document
+.getElementById("sendBtn")
+.addEventListener("click",sendMessage);
+
+document
+.getElementById("userInput")
+.addEventListener("keydown",function(event){
+
+if(event.key==="Enter"){
+sendMessage();
+}
+
+});
+
+</script>
+
+</body>
+</html>
