@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="am" dir="ltr">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Jemal Muslim AI</title>
+
+  <meta
+    name="description"
+    content="Jemal Muslim AI - Islamic AI Assistant"
+  >
+
+  <meta
+    name="theme-color"
+    content="#07140f"
+  >
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+</head>
+
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="header-top">
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          🕌
+        </div>
+
+        <div>
+
+          <h1>
+            Jemal Muslim AI
+          </h1>
+
+          <p>
+            Islamic AI Assistant
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="themeBtn"
+        class="theme-btn"
+        type="button"
+      >
+        ☀️
+      </button>
+
+    </div>
+
+
+    <div class="bismillah">
+
+      بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+
+    </div>
+
+
+    <!-- ================= LANGUAGES ================= -->
+
+    <div class="languages">
+
+      <button
+        class="lang-btn active"
+        data-lang="am"
+        type="button"
+      >
+        አማርኛ
+      </button>
+
+
+      <button
+        class="lang-btn"
+        data-lang="om"
+        type="button"
+      >
+        Afaan Oromoo
+      </button>
+
+
+      <button
+        class="lang-btn"
+        data-lang="ar"
+        type="button"
+      >
+        العربية
+      </button>
+
+
+      <button
+        class="lang-btn"
+        data-lang="en"
+        type="button"
+      >
+        English
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main class="main">
+
+    <section
+      id="messages"
+      class="messages"
+      aria-live="polite"
+    >
+
+      <!-- WELCOME -->
+
+      <div
+        id="welcome"
+        class="message bot"
+      >
+
+        <div class="message-name">
+
+          🕌 Jemal Muslim AI
+
+        </div>
+
+        <div id="welcomeText">
+
+          አስላሙ አለይኩም! 👋
+
+          <br><br>
+
+          እኔ Jemal Muslim AI ነኝ።
+
+          <br>
+
+          የእስልምና ጥያቄዎን
+          በአማርኛ፣ Afaan Oromoo፣
+          العربية ወይም English
+          መጠየቅ ይችላሉ።
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ================= INPUT ================= -->
+
+    <div class="input-area">
+
+      <textarea
+        id="userInput"
+        rows="1"
+        maxlength="4000"
+        autocomplete="off"
+        placeholder="ጥያቄዎን ይጻፉ..."
+      ></textarea>
+
+
+      <button
+        id="sendBtn"
+        type="button"
+      >
+
+        <span id="sendText">
+          ላክ
+        </span>
+
+        <span class="send-icon">
+          ➤
+        </span>
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="status"
+      class="status"
+    ></div>
+
+  </main>
+
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="footer-name">
+
+      ☪️ Jemal Muslim AI
+
+    </div>
+
+    <div>
+
+      Made for the Ummah ❤️
+
+    </div>
+
+  </footer>
+
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>
